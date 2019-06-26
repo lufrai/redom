@@ -471,7 +471,7 @@ mount(document.body, table);</code></pre>
       <pre><code class="language-js">this.list = list(&#39;tr&#39;, Td);
 this.el = this.list.el;</code></pre>
       <h2 id="place">Place</h2>
-      <p>Sometimes you might need to create/destroy a component while reserving it&#39;s place. That&#39;s when <a href="https://github.com/redom/redom/blob/master/esm/place.js"><code>place(View, initData)</code></a> come in handy!</p>
+      <p>Sometimes you might need to create/destroy a component/element while reserving it&#39;s place. That&#39;s when <a href="https://github.com/redom/redom/blob/master/esm/place.js"><code>place(View, initData)</code></a> come in handy!</p>
       <p>Think of it as a single view <a href="#router">router</a> (without the need of a parent).</p>
       <pre><code class="language-js">import { place, mount } from &#39;redom&#39;;
 import { Top, Menu, Content } from &#39;./elements&#39;;
@@ -498,7 +498,7 @@ this.menu.update(false);
       <li><a href="https://github.com/redom/redom/blob/master/esm/place.js#L40">destroy</a></li>
       </ul>
       <h2 id="router">Router</h2>
-      <p><a href="https://github.com/redom/redom/blob/master/esm/router.js"><code>router(parent, routes, initData)</code></a> is a component router, which will create/update/remove components based on the current route.</p>
+      <p><a href="https://github.com/redom/redom/blob/master/esm/router.js"><code>router(parent, routes, initData)</code></a> is a component/element router, which will create/update/remove components/element based on the current route.</p>
       <pre><code class="language-js">import { router, mount } from &#39;redom&#39;;
 
 import { Home, About, Contact } from &#39;./sections/index&#39;
@@ -525,7 +525,7 @@ app.update(&#39;about&#39;, data);</code></pre>
       <h2 id="more-examples">More examples</h2>
       <p>You can find more examples on the <a href="https://redom.js.org">RE:DOM website</a>!</p>
       <h2 id="support--feedback">Support / feedback</h2>
-      <p>You&#39;re welcome to join  <a href="https://koodiklinikka.slack.com/messages/redom/">#redom</a> @ <a href="koodiklinikka.slack.com" title="get invitation by entering your email at [koodiklinikka.fi](https://koodiklinikka.fi">koodiklinikka.slack.com</a>). If you have any questions / feedback, you can also raise an issue on <a href="https://github.com/redom/redom">GitHub</a>.</p>
+      <p>You&#39;re welcome to join  <a href="https://koodiklinikka.slack.com/messages/redom/">#redom</a> @ <a href="koodiklinikka.slack.com">koodiklinikka.slack.com</a> (get invitation by entering your email at <a href="https://koodiklinikka.fi">koodiklinikka.fi</a>). If you have any questions / feedback, you can also raise an issue on <a href="https://github.com/redom/redom">GitHub</a>.</p>
       <h2 id="developing">Developing</h2>
       <p>RE:DOM is on <a href="https://github.com/redom/redom">GitHub</a>, source is <a href="https://github.com/redom/redom/tree/master/esm">here</a>. To start developing:</p>
       <ul>

@@ -12,18 +12,14 @@ function parseQuery (query) {
       if (className.length > 0) {
         className += ' ';
       }
-    }
-    if (char === '#') {
+    } else if (char === '#') {
       isId = true;
       isClass = false;
-    }
-    if (isId && !isClass && char !== '#') {
+    } else if (isId) {
       id += char;
-    }
-    if (isClass && !isId && char !== '.') {
+    } else if (isClass) {
       className += char;
-    }
-    if (!isId && !isClass) {
+    } else {
       tag += char;
     }
   }
@@ -79,7 +75,7 @@ function doUnmount (child, childEl, parentEl) {
   var hooks = childEl.__redom_lifecycle;
 
   if (hooksAreEmpty(hooks)) {
-    childEl.__redom_mounted = false;
+    childEl.__redom_lifecycle = {};
     return;
   }
 
@@ -214,7 +210,7 @@ function doMount (child, childEl, parentEl, oldParent) {
   }
 
   if (!hooksFound) {
-    childEl.__redom_mounted = true;
+    childEl.__redom_lifecycle = {};
     return;
   }
 
@@ -621,6 +617,9 @@ var Place = function Place (View, initData) {
 
   if (View instanceof Node) {
     this._el = View;
+  } else if (View.el instanceof Node) {
+    this._el = View;
+    this.view = View;
   } else {
     this._View = View;
   }
@@ -637,19 +636,18 @@ Place.prototype.update = function update (visible, data) {
         mount(parentNode, this._el, placeholder);
         unmount(parentNode, placeholder);
 
-        this.el = this._el;
+        this.el = getEl(this._el);
         this.visible = visible;
+      } else {
+        var View = this._View;
+        var view = new View(this._initData);
 
-        return;
+        this.el = getEl(view);
+        this.view = view;
+
+        mount(parentNode, view, placeholder);
+        unmount(parentNode, placeholder);
       }
-      var View = this._View;
-      var view = new View(this._initData);
-
-      this.el = getEl(view);
-      this.view = view;
-
-      mount(parentNode, view, placeholder);
-      unmount(parentNode, placeholder);
     }
     this.view && this.view.update && this.view.update(data);
   } else {
@@ -673,6 +671,8 @@ Place.prototype.update = function update (visible, data) {
   this.visible = visible;
 };
 
+/* global Node */
+
 function router (parent, Views, initData) {
   return new Router(parent, Views, initData);
 }
@@ -688,7 +688,12 @@ Router.prototype.update = function update (route, data) {
     var View = Views[route];
 
     this.route = route;
-    this.view = View && new View(this.initData, data);
+
+    if (View && (View instanceof Node || View.el instanceof Node)) {
+      this.view = View;
+    } else {
+      this.view = View && new View(this.initData, data);
+    }
 
     setChildren(this.el, [ this.view ]);
   }
